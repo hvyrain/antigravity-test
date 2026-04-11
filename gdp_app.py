@@ -83,6 +83,59 @@ if not df.empty:
 
     st.markdown("<br>", unsafe_allow_html=True)
 
+    # === 0. 세계 GDP 분포 지도 (Choropleth Map) ===
+    st.header(f"🌍 {selected_year}년 세계 1인당 GDP 분포")
+    st.markdown("전 세계 국가들의 경제 수준을 지도로 한눈에 확인하세요. (색이 짙을수록 GDP가 높으며, 격차를 뚜렷하게 보기 위해 로그 스케일을 적용했습니다.)")
+    
+    # 국가명 매핑 딕셔너리 (주요 국가 및 데이터셋 포함 국가)
+    korean_to_iso3 = {
+        '대한민국': 'KOR', '미국': 'USA', '일본': 'JPN', '중국': 'CHN', '영국': 'GBR', '독일': 'DEU', '프랑스': 'FRA',
+        '인도': 'IND', '브라질': 'BRA', '러시아': 'RUS', '캐나다': 'CAN', '오스트레일리아': 'AUS', '이탈리아': 'ITA',
+        '스페인': 'ESP', '멕시코': 'MEX', '인도네시아': 'IDN', '네덜란드': 'NLD', '사우디아라비아': 'SAU', '터키': 'TUR', '튀르키예': 'TUR',
+        '스위스': 'CHE', '폴란드': 'POL', '대만': 'TWN', '스웨덴': 'SWE', '벨기에': 'BEL', '아르헨티나': 'ARG', '노르웨이': 'NOR',
+        '오스트리아': 'AUT', '이스라엘': 'ISR', '태국': 'THA', '아랍에미리트': 'ARE', '콜롬비아': 'COL', '남아프리카공화국': 'ZAF',
+        '덴마크': 'DNK', '이집트': 'EGY', '필리핀': 'PHL', '싱가포르': 'SGP', '베트남': 'VNM', '홍콩': 'HKG', '말레이시아': 'MYS',
+        '루마니아': 'ROU', '칠레': 'CHL', '카자흐스탄': 'KAZ', '핀란드': 'FIN', '체코': 'CZE', '포르투갈': 'PRT', '그리스': 'GRC',
+        '페루': 'PER', '카타르': 'QAT', '뉴질랜드': 'NZL', '쿠웨이트': 'KWT', '헝가리': 'HUN', '알제리': 'DZA', '우크라이나': 'UKR',
+        '모로코': 'MAR', '에티오피아': 'ETH', '슬로바키아': 'SVK', '에콰도르': 'ECU', '푸에르토리코': 'PRI', '아제르바이잔': 'AZE',
+        '케냐': 'KEN', '아이슬란드': 'ISL', '룩셈부르크': 'LUX', '우즈베키스탄': 'UZB', '스리랑카': 'LKA', '도미니카공화국': 'DOM',
+        '미얀마': 'MMR', '가나': 'GHA', '불가리아': 'BGR', '탄자니아': 'TZA', '과테말라': 'GTM', '파나마': 'PAN', '오만': 'OMN',
+        '코스타리카': 'CRI', '크로아티아': 'HRV', '아이보리코스트': 'CIV', '코트디부아르': 'CIV', '리투아니아': 'LTU', '슬로베니아': 'SVN',
+        '요르단': 'JOR', '세르비아': 'SRB', '우루과이': 'URY', '레바논': 'LBN', '캄보디아': 'KHM', '방글라데시': 'BGD', '파라과이': 'PRY',
+        '튀니지': 'TUN', '볼리비아': 'BOL', '라트비아': 'LVA', '에스토니아': 'EST', '바레인': 'BHR', '라오스': 'LAO', '네팔': 'NPL',
+        '아프가니스탄': 'AFG', '이라크': 'IRQ', '이란': 'IRN', '나이지리아': 'NGA', '앙골라': 'AGO', '조지아': 'GEO', '아르메니아': 'ARM'
+        # 필요시 더 추가 가능
+    }
+    
+    df_map = df_selected.copy()
+    df_map['iso_alpha'] = df_map['Country'].map(korean_to_iso3)
+    
+    # 로그 스케일 적용 (격차 시각화 최적화)
+    df_map['GDP_Log'] = np.log10(df_map['GDP'])
+    
+    fig_map = px.choropleth(df_map, 
+                            locations="iso_alpha",
+                            color="GDP_Log", # 색상은 로그값으로 계산
+                            hover_name="Country",
+                            hover_data={"iso_alpha": False, "GDP": ":,.0f", "GDP_Log": False},
+                            color_continuous_scale=px.colors.sequential.Plasma,
+                            labels={'GDP': '1인당 GDP ($)'},
+                            projection="natural earth",
+                            height=600)
+    
+    # 컬러바 수치 표시 수정 (로그값을 실제값으로 보이게 커스텀하거나 제목 수정)
+    fig_map.update_layout(
+        coloraxis_colorbar=dict(
+            title="경제 수준",
+            tickvals=[3, 4, 5],
+            ticktext=["$1K", "$10K", "$100K"]
+        ),
+        margin={"r":0,"t":40,"l":0,"b":0}
+    )
+    
+    st.plotly_chart(fig_map, use_container_width=True)
+    st.markdown("---")
+
     # 1. 전 세계 성장 추이 (Line Chart)
     st.header("📈 1. 전 세계 경제 성장 트렌드")
     df_trend = df.groupby('Year')['GDP'].mean().reset_index()
