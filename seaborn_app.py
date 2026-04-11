@@ -21,23 +21,32 @@ def home_page():
     원하시는 분석 도구를 상단 네비게이션 바에서 선택하여 시작해 보세요!
     """)
     
-    # 대표 카드 시각화
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        st.subheader("✈️ 항공 여객")
-        st.write("시계열 데이터의 추세와 이동평균 분석")
+    # 대표 카드 시각화 (2x2 레이아웃)
+    row1_c1, row1_c2 = st.columns(2)
+    with row1_c1:
+        st.subheader("✈️ Flights Analysis")
+        st.write("시계열 데이터의 추세와 계절성 분석")
         if st.button("✈️ Flights 이동", use_container_width=True):
             st.switch_page("flights_app.py")
-    with c2:
-        st.subheader("🌸 붓꽃 데이터")
-        st.write("품종별 특성 상관관계 시각화")
+    with row1_c2:
+        st.subheader("🌸 Iris Analysis")
+        st.write("품종별 특성 상관관계 및 분포 시각화")
         if st.button("🌸 Iris 이동", use_container_width=True):
             st.switch_page("iris_app.py")
-    with c3:
-        st.subheader("🌐 GDP 데이터")
-        st.write("전 세계 경제 성장 추이 분석")
+            
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    row2_c1, row2_c2 = st.columns(2)
+    with row2_c1:
+        st.subheader("🌐 GDP Analysis")
+        st.write("전 세계 경제 성장 및 국가별 지표 분석")
         if st.button("🌐 GDP 이동", use_container_width=True):
             st.switch_page("gdp_app.py")
+    with row2_c2:
+        st.subheader("💰 Sales Analysis")
+        st.write("사원 및 제품별 매출 현황 인텔리전스 분석")
+        if st.button("💰 Sales 이동", use_container_width=True):
+            st.switch_page("sales_app.py")
 
 # 페이지들을 구성 (st.Page 객체 활용)
 pages = [
@@ -45,6 +54,7 @@ pages = [
     st.Page("flights_app.py", title="Flights Analysis", icon="✈️"),
     st.Page("iris_app.py", title="Iris Analysis", icon="🌸"),
     st.Page("gdp_app.py", title="GDP Analysis", icon="🌐"),
+    st.Page("sales_app.py", title="Sales Analysis", icon="💰"),
 ]
 
 # 네비게이션 생성 (상단 메뉴 배치)
