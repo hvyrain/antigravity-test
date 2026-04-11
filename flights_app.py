@@ -4,12 +4,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
 
-# 페이지 설정
-st.set_page_config(
-    page_title="✈️ 항공 여객 시계열 데이터 분석",
-    page_icon="✈️",
-    layout="wide"
-)
+# (Page config handled by seaborn_app.py)
+
 
 # 데이터 로딩 함수 (캐싱 적용)
 @st.cache_data
@@ -97,6 +93,12 @@ try:
     # 기존 원본 승객수는 투명도를 조금 주거나 선 굵기를 조절하면 좋지만 기본 설정도 훌륭합니다.
     st.plotly_chart(fig_trend, use_container_width=True)
     
+    st.success("""
+    **💡 추세 분석 결과:** 
+    1949년부터 1960년까지 항공 승객 수는 연평균 약 10~15%씩 **지속적으로 성장**하고 있습니다. 
+    특히 하단의 이동평균선을 조절해 보면, 단기적인 변동에도 불구하고 전체적인 우상향 곡선이 매우 뚜렷하게 유지됨을 알 수 있습니다.
+    """)
+    
     st.markdown("---")
     
     # 3. 계절성 분석 (월별 Boxplot 및 연도별 꺾은선)
@@ -123,6 +125,12 @@ try:
                              category_orders={'month': ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']})
         st.plotly_chart(fig_yearly, use_container_width=True)
         
+    st.info("""
+    **💡 계절성 패턴 발견:** 
+    모든 연도에서 공통적으로 **7월(Jul)과 8월(Aug)**에 승객 수가 정점을 찍는 강력한 여름철 성수기 패턴이 발견됩니다. 
+    반면, 11월(Nov)과 2월(Feb)경에는 상대적으로 수요가 감소하는 비수기 경향을 보입니다.
+    """)
+    
     st.markdown("---")
     
     # 4. 연도/월별 종합 히트맵 (Seaborn/Matplotlib)
@@ -142,6 +150,11 @@ try:
     
     # Matplotlib의 피규어를 Streamlit으로 화면에 출력
     st.pyplot(fig_heat)
+
+    st.success("""
+    **💡 종합 분석:** 
+    히트맵의 우측 상단(1960년 여름)이 가장 붉은 색을 띠는 것은 **시간의 흐름(추세)**과 **여름철(계절성)**이 만나는 지점에서 항공 수요가 극대화됨을 시각적으로 증명합니다.
+    """)
 
 except Exception as e:
     st.error(f"데이터를 불러오거나 시각화하는 중 문제가 발생했습니다: {e}")

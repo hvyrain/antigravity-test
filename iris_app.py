@@ -59,6 +59,12 @@ try:
                      labels={'species': '품종', target_feature: '크기 (cm)'})
     st.plotly_chart(fig_box, use_container_width=True)
 
+    st.info("""
+    **💡 분포 인사이트:** 
+    꽃잎의 길이(`petal_length`)와 너비(`petal_width`)를 보면 **setosa** 종이 다른 두 종에 비해 압도적으로 작고 균일한 크기를 분포하고 있음을 알 수 있습니다. 
+    반면 **virginica**는 전반적으로 가장 큰 크기를 보이며 개체 간 변동성(박스의 길이)도 가장 큽니다.
+    """)
+
     st.markdown("---")
 
     # 3. 상관관계 분석 (Scatter Plot)
@@ -79,16 +85,36 @@ try:
                                      y_axis: y_axis.replace('_', ' ').title()})
     st.plotly_chart(fig_scatter, use_container_width=True)
 
+    st.success("""
+    **💡 상관관계 인사이트:** 
+    꽃잎의 길이와 너비 사이에는 매우 강력한 **양(+)의 상관관계**가 관찰됩니다. 
+    특히 **setosa** 종은 왼쪽 하단에 완전히 독립된 군집(Cluster)을 형성하고 있어, 꽃잎 크기만으로도 다른 종과 쉽게 구분이 가능함을 시각적으로 확인할 수 있습니다.
+    """)
+
     st.markdown("---")
 
     # 4. 전체 관계 시각화 (Seaborn Pairplot)
     st.header("🧬 전체 특성 관계도 (Pair Plot)")
-    st.markdown("모든 변수 간의 관계를 한눈에 보여줍니다. Seaborn의 강력한 시각화 기능을 활용한 정적 차트입니다.")
+    st.markdown("모든 변수 간의 관계를 한눈에 보여줍니다. 생성에 시간이 걸리므로 한 번 생성된 결과는 **캐시(Cache)**되어 다음에 바로 나타납니다.")
     
+    # Pairplot 생성 함수 캐싱 (st.cache_resource 사용)
+    @st.cache_resource
+    def get_pairplot(_data):
+        # 폰트 및 스타일 설정
+        sns.set_theme(style="ticks")
+        pair_grid = sns.pairplot(_data, hue="species", palette="husl", markers=["o", "s", "D"])
+        return pair_grid.fig
+
     # Seaborn Pairplot은 계산량이 좀 있으므로 spinner 적용
-    with st.spinner("복합 차트를 생성 중입니다..."):
-        fig_pair = sns.pairplot(df, hue="species", palette="husl", markers=["o", "s", "D"])
-        st.pyplot(fig_pair.fig)
+    with st.spinner("복합 차트를 생성 중입니다. 잠시만 기다려 주세요..."):
+        fig_pair = get_pairplot(df)
+        st.pyplot(fig_pair)
+
+    st.info("""
+    **💡 종합 분석 (Linearly Separable):** 
+    모든 특성을 종합해 볼 때, **setosa**는 어떤 조합에서도 다른 종들과 명확히 분리되는 '선형 분리 가능' 데이터를 보여줍니다. 
+    반면 **versicolor**와 **virginica**는 일부 특성 영역에서 겹치는 부분이 존재하여, 머신러닝 분류 알고리즘에서 이 두 종을 구분하는 것이 핵심 과제가 됩니다.
+    """)
 
 except Exception as e:
     st.error(f"데이터 분석 중 오류가 발생했습니다: {e}")
