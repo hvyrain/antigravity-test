@@ -38,7 +38,7 @@ def get_clean_gdp_data():
 st.title("🌐 세계 1인당 GDP 데이터 분석 (2015-2024)")
 st.markdown("""
 이 앱은 실시간으로 데이터를 정제하여 전 세계 국가들의 경제 성장과 대륙별 격차를 분석합니다. 
-데이터 소스: kosis.kr - `gdp2015-2024.csv`
+데이터 소스: kosis.kr-`gdp2015-2024.csv`
 """)
 
 df = get_clean_gdp_data()
