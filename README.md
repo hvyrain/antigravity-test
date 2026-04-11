@@ -14,9 +14,9 @@
 - Git도 더 매끄럽게 동작
 
 ## 왜 Antigravity가 더 빠르고 매끄럽게 느껴질까?
-- Google이 Antigravity를 위해 Gemini를 "IDE 전용"으로 튜닝했다.
+- Google이 Antigravity를 위해 Gemini를 "IDE 전용"으로 튜닝했다.   
 VS Code의 Gemini Code Assist나 Copilot은 범용 확장이라 중간 과정이 많지만, Antigravity는 Google이 처음부터 Agentic workflow를 가정하고 만들었기 때문에 불필요한 지연이 적습니다.
-- Planning Mode + Fast Mode 분리
+- Planning Mode + Fast Mode 분리   
 Antigravity는 "먼저 계획 세우고 → 실행" 구조가 잘 되어 있어서, 큰 작업(예: Streamlit 페이지 이동 구현)에서 AI가 더 스마트하고 빠르게 움직입니다. VS Code는 보통 한 번에 모든 걸 처리하려다 보니 컨텍스트가 복잡해지면 느려집니다.
-- 최적화 수준 차이
+- 최적화 수준 차이   
 Antigravity는 아직 신규 도구라 AI 관련 코드 경로를 매우 가볍고 빠르게 설계했습니다. 반대로 VS Code는 수많은 확장과 오랜 레거시를 안고 있어서, AI가 활성화되면 전체 에디터가 약간 무거워지는 경향이 있어요.
