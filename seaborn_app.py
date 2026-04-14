@@ -26,12 +26,12 @@ def home_page():
     with row1_c1:
         st.subheader("✈️ Flights Analysis")
         st.write("시계열 데이터의 추세와 계절성 분석")
-        if st.button("✈️ Flights 이동", use_container_width=True):
+        if st.button("✈️ Flights 이동", width="content"):
             st.switch_page("flights_app.py")
     with row1_c2:
         st.subheader("🌸 Iris Analysis")
         st.write("품종별 특성 상관관계 및 분포 시각화")
-        if st.button("🌸 Iris 이동", use_container_width=True):
+        if st.button("🌸 Iris 이동", width="content"):
             st.switch_page("iris_app.py")
             
     st.markdown("<br>", unsafe_allow_html=True)
@@ -40,12 +40,12 @@ def home_page():
     with row2_c1:
         st.subheader("🌐 GDP Analysis")
         st.write("전 세계 경제 성장 및 국가별 지표 분석")
-        if st.button("🌐 GDP 이동", use_container_width=True):
+        if st.button("🌐 GDP 이동", width="content"):
             st.switch_page("gdp_app.py")
     with row2_c2:
         st.subheader("💰 Sales Analysis")
         st.write("사원 및 제품별 매출 현황 인텔리전스 분석")
-        if st.button("💰 Sales 이동", use_container_width=True):
+        if st.button("💰 Sales 이동", width="content"):
             st.switch_page("sales_app.py")
 
 # 페이지들을 구성 (st.Page 객체 활용)

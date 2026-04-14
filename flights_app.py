@@ -59,7 +59,7 @@ try:
     
     # 1. 원본 데이터 토글 보기
     with st.expander("📊 원본 데이터 프레임 보기"):
-        st.dataframe(df, use_container_width=True)
+        st.dataframe(df, width="content")
 
     st.markdown("---")
     
@@ -91,7 +91,7 @@ try:
         legend_title_text='' # 범례 타이틀 생략
     )
     # 기존 원본 승객수는 투명도를 조금 주거나 선 굵기를 조절하면 좋지만 기본 설정도 훌륭합니다.
-    st.plotly_chart(fig_trend, use_container_width=True)
+    st.plotly_chart(fig_trend, width="content")
     
     st.success("""
     **💡 추세 분석 결과:** 
@@ -112,7 +112,7 @@ try:
         fig_box = px.box(df, x='month', y='passengers', color='month', 
                          title="12년간 각 월별 승객수의 통계적 분포",
                          category_orders={'month': ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']})
-        st.plotly_chart(fig_box, use_container_width=True)
+        st.plotly_chart(fig_box, width="content")
         
     with col2:
         st.subheader("연도별 추세선 겹쳐보기")
@@ -123,7 +123,7 @@ try:
         fig_yearly = px.line(df_plot, x='month', y='passengers', color='year_str', 
                              title="모든 연도의 각 월별 전년대비 성장 추이",
                              category_orders={'month': ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']})
-        st.plotly_chart(fig_yearly, use_container_width=True)
+        st.plotly_chart(fig_yearly, width="content")
         
     st.info("""
     **💡 계절성 패턴 발견:** 

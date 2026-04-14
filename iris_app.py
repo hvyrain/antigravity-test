@@ -40,7 +40,7 @@ try:
     # 1. 데이터 테이블
     with st.expander("📊 원본 데이터 및 종별 통계 보기"):
         st.write("### 원본 데이터 (상위 10개)")
-        st.dataframe(df.head(10), use_container_width=True)
+        st.dataframe(df.head(10), width="content")
         st.write("### 종별 평균 측정치 (cm)")
         st.table(avg_stats)
 
@@ -57,7 +57,7 @@ try:
     fig_box = px.box(df, x='species', y=target_feature, color='species',
                      points="all", title=f"품종별 {target_feature} 분포",
                      labels={'species': '품종', target_feature: '크기 (cm)'})
-    st.plotly_chart(fig_box, use_container_width=True)
+    st.plotly_chart(fig_box, width="content")
 
     st.info("""
     **💡 분포 인사이트:** 
@@ -83,7 +83,7 @@ try:
                              title=f"{x_axis} vs {y_axis} 상관관계",
                              labels={x_axis: x_axis.replace('_', ' ').title(), 
                                      y_axis: y_axis.replace('_', ' ').title()})
-    st.plotly_chart(fig_scatter, use_container_width=True)
+    st.plotly_chart(fig_scatter, width="content")
 
     st.success("""
     **💡 상관관계 인사이트:** 

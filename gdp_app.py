@@ -133,7 +133,7 @@ if not df.empty:
         margin={"r":0,"t":40,"l":0,"b":0}
     )
     
-    st.plotly_chart(fig_map, use_container_width=True)
+    st.plotly_chart(fig_map, width="content")
     st.markdown("---")
 
     # 1. 전 세계 성장 추이 (Line Chart)
@@ -146,7 +146,7 @@ if not df.empty:
     fig_trend.add_vline(x=selected_year, line_dash="dash", line_color="red", 
                         annotation_text=f"{selected_year}년 선택됨", annotation_position="top left")
     
-    st.plotly_chart(fig_trend, use_container_width=True)
+    st.plotly_chart(fig_trend, width="content")
     st.markdown(f"**인사이트:** {df['Year'].min()}년부터 {df['Year'].max()}년까지의 전체 흐름 속에서 현재 **{selected_year}년**의 위치를 확인할 수 있습니다.")
 
     st.markdown("---")
@@ -164,7 +164,7 @@ if not df.empty:
                            labels={'GDP': 'GDP ($)'}, markers=True)
         # 선택 연도 수직선 추가
         fig_comp.add_vline(x=selected_year, line_dash="dash", line_color="gray")
-        st.plotly_chart(fig_comp, use_container_width=True)
+        st.plotly_chart(fig_comp, width="content")
 
     st.markdown("---")
 
@@ -175,7 +175,7 @@ if not df.empty:
                        title=f"{selected_year}년 1인당 GDP 상위 10개국",
                        labels={'GDP': 'GDP ($)'}, color_continuous_scale='Viridis')
     fig_top10.update_layout(yaxis={'categoryorder':'total ascending'})
-    st.plotly_chart(fig_top10, use_container_width=True)
+    st.plotly_chart(fig_top10, width="content")
 
     st.markdown("---")
 
@@ -192,7 +192,7 @@ if not df.empty:
         fig_growth = px.bar(top_growth, x='Country', y='Growth_Rate', color='Growth_Rate',
                             title=f"2015-{selected_year} 성장률(%) 상위 10개국",
                             labels={'Growth_Rate': '성장률 (%)'})
-        st.plotly_chart(fig_growth, use_container_width=True)
+        st.plotly_chart(fig_growth, width="content")
     else:
         st.header("🚀 4. 지난 10년간 성장 분석")
         st.info("2015년 이후의 연도를 선택하시면 성장률 분석 차트가 나타납니다.")
@@ -205,7 +205,7 @@ if not df.empty:
                      points="all", hover_data=['Country'],
                      title=f"{selected_year}년 대륙별 GDP 분포 (박스플롯)",
                      labels={'GDP': 'GDP ($)'})
-    st.plotly_chart(fig_box, use_container_width=True)
+    st.plotly_chart(fig_box, width="content")
     st.markdown(f"""
     **분석 결과 ({selected_year}년 기준):** 
     - 유럽과 북아메리카의 중윗값이 상당히 높으며, 동시에 내륙 국가 간 격차가 큰 것을 확인할 수 있습니다. 

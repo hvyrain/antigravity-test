@@ -82,8 +82,8 @@ if uploaded_file is not None:
     image = Image.open(uploaded_file)
     
     st.subheader("🖼️ 원본 이미지")
-    # 넓이를 화면에 맞게 조정 (use_container_width=True)
-    st.image(image, use_container_width=True)
+    # 넓이를 화면에 맞게 조정
+    st.image(image, width="content")
     
     st.subheader(f"✨ 추출된 {num_colors}가지 주요 색상")
     
