@@ -57,7 +57,7 @@ try:
     fig_box = px.box(df, x='species', y=target_feature, color='species',
                      points="all", title=f"품종별 {target_feature} 분포",
                      labels={'species': '품종', target_feature: '크기 (cm)'})
-    st.plotly_chart(fig_box, width="content")
+    st.plotly_chart(fig_box, width="stretch")
 
     st.info("""
     **💡 분포 인사이트:** 
@@ -83,7 +83,7 @@ try:
                              title=f"{x_axis} vs {y_axis} 상관관계",
                              labels={x_axis: x_axis.replace('_', ' ').title(), 
                                      y_axis: y_axis.replace('_', ' ').title()})
-    st.plotly_chart(fig_scatter, width="content")
+    st.plotly_chart(fig_scatter, width="stretch")
 
     st.success("""
     **💡 상관관계 인사이트:** 
